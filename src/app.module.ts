@@ -10,7 +10,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { CredentialsGuard } from './auth/guards/credentials.guard';
 import { FirebaseModule } from './firebase/firebase.module';
-
+import { PaymentModule } from './payment/payment.module';
+import { ApplicationModule } from './application/application.module';
+import { NotificationModule } from './notification/notification.module';
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
@@ -19,6 +21,9 @@ import { FirebaseModule } from './firebase/firebase.module';
     UsersModule,
     AuthModule,
     FirebaseModule,
+    PaymentModule,
+    ApplicationModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [

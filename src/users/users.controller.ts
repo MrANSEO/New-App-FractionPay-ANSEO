@@ -14,8 +14,10 @@ import { Credentials } from '../auth/decorators/credentials.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 import { UserCredential } from 'src/common/enums/user-credential.enum';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('users')
+@Public()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -44,7 +46,7 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Credentials(UserCredential.USERS_UPDATE)
+  @Credentials(UserCredential.USERS_CREATE)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
