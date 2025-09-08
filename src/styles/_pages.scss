@@ -1,0 +1,66 @@
+// src/styles/_pages.scss
+@use './variables' as *;
+@use './mixins';
+@use 'sass:color';
+
+.payment-page {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+}
+
+.order-summary {
+  flex: 1;
+  padding: 30px;
+  background: #f8f9fa;
+  border-right: 1px solid $border;
+}
+
+.payment-section {
+  flex: 1.5;
+  padding: 30px;
+}
+
+.wallet-split-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  label {
+    width: 140px;
+    font-weight: 500;
+    color: #555;
+  }
+  input[type="number"] {
+    flex: 1;
+    max-width: 120px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+}
+
+.add-wallet-split-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  &:hover { background: #5a6268; }
+}
+
+.pay-button {
+  @include mixins.button($success, color.adjust($success, $lightness: -10%));
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 30px;
+}

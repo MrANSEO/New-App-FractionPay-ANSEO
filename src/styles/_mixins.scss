@@ -1,0 +1,24 @@
+// src/styles/_mixins.scss
+@use 'sass:color';
+@use './variables' as *;
+
+@mixin flex($dir: row, $ai: flex-start, $jc: flex-start) {
+  display: flex;
+  flex-direction: $dir;
+  align-items: $ai;
+  justify-content: $jc;
+}
+
+@mixin button($bg, $hover) {
+  background: $bg;
+  border: none;
+  padding: 8px 15px;
+  border-radius: $radius;
+  color: white;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background: $hover;
+  }
+}

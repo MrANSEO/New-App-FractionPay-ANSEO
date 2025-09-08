@@ -1,0 +1,48 @@
+// src/styles/_layout.scss
+@use './variables' as *;
+@use './mixins';
+@use 'sass:color';
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: $dark;
+  color: white;
+  padding: 20px 0;
+  .sidebar-logo {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .sidebar-nav {
+    ul {
+      list-style: none;
+      li {
+        a {
+          display: flex;
+          align-items: center;
+          padding: 15px 30px;
+          color: color.adjust($dark, $lightness: 40%);
+          font-weight: 500;
+          transition: $transition;
+          &.active, &:hover {
+            background: color.adjust($dark, $lightness: -10%);
+            color: white;
+            border-left: 5px solid $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: #eef2f6;
+}
