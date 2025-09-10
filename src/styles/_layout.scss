@@ -1,7 +1,6 @@
-// src/styles/_layout.scss
+@use "sass:color";
 @use './variables' as *;
 @use './mixins';
-@use 'sass:color';
 
 .admin-layout {
   display: flex;
@@ -13,12 +12,14 @@
   background: $dark;
   color: white;
   padding: 20px 0;
+
   .sidebar-logo {
     font-size: 24px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 30px;
   }
+
   .sidebar-nav {
     ul {
       list-style: none;
@@ -30,7 +31,9 @@
           color: color.adjust($dark, $lightness: 40%);
           font-weight: 500;
           transition: $transition;
-          &.active, &:hover {
+
+          &.active,
+          &:hover {
             background: color.adjust($dark, $lightness: -10%);
             color: white;
             border-left: 5px solid $primary;

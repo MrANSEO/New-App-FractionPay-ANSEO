@@ -1,96 +1,93 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 
+// Types
 interface PaymentStep {
-  paymentProvider: string;
   amount: number;
-  status: 'PENDING' | 'SUCCESS' | string;
+  paymentProvider: string;
+  status: 'PENDING' | 'SUCCESS' | 'FAILED';
 }
 
 interface Payment {
+  paymentId: string;
   totalAmount: number;
-  status: string;
   steps: PaymentStep[];
 }
 
 export default function PaymentPage() {
-  const { paymentId } = useParams();
-  // const navigate = useNavigate();
+  const { paymentId } = useParams<{ paymentId: string }>();
+  const navigate = useNavigate();
   const [payment, setPayment] = useState<Payment | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+
+  const loadPayment = async () => {
+    if (!paymentId) return;
+    try {
+      const data: Payment = await api.get(`/payments/${paymentId}`);
+      setPayment(data);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      alert('Paiement introuvable');
+      navigate('/login');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadPayment = async () => {
-      try {
-        const data = await api.get(`/payments/${paymentId}`);
-        setPayment(data as Payment);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (err) {
-        setError('Paiement introuvable');
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (paymentId) loadPayment();
+    loadPayment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentId]);
-
-  if (loading) return <div>Chargement...</div>;
-  if (error) return <div>{error}</div>;
-  if (!payment) return null;
 
   const handlePay = async (step: PaymentStep) => {
     try {
-      const response = await api.post('/paypal/create-order', {
-        paymentId,
-        amount: step.amount,
-      });
+      const response = await api.post<{ approveUrl: string }>(
+        '/paypal/create-order',
+        {
+          paymentId,
+          amount: step.amount,
+        }
+      );
 
-      // Ensure response is typed
-      const res = response as { approveUrl?: string };
-
-      if (res.approveUrl) {
-        window.location.href = res.approveUrl;
+      if (response.approveUrl) {
+        window.location.href = response.approveUrl;
       } else {
         alert('Impossible de générer le lien de paiement');
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       alert(err.message || 'Échec du paiement');
     }
   };
 
+  if (loading) return <div>Chargement...</div>;
+  if (!payment) return <div>Paiement non trouvé</div>;
+
   return (
     <div className="payment-page">
       <div className="order-summary">
-        <h2>Total à payer : {payment.totalAmount} €</h2>
-        <p>Statut : {payment.status}</p>
+        <h2>Récapitulatif</h2>
+        <p>Total à payer : <strong>{payment.totalAmount} €</strong></p>
       </div>
 
-      <div className="payment-section">
-        <h2>Méthodes de paiement disponibles</h2>
-        <p>Payez chaque étape séparément :</p>
-
-        {payment.steps.map((step, index) => (
-          <div key={index} className="method-card">
-            <div className="method-info">
+      <div className="payment-steps">
+        <h3>Étapes de paiement</h3>
+        {payment.steps.map((step, i) => (
+          <div key={i} className={`step-card ${step.status.toLowerCase()}`}>
+            <div className="step-info">
               <strong>{step.paymentProvider}</strong>
               <span>{step.amount} €</span>
-              <span className={`status-badge ${step.status.toLowerCase()}`}>
-                {step.status}
-              </span>
+              <span className="status">{step.status}</span>
             </div>
             {step.status === 'PENDING' && (
               <button
-                className="pay-btn"
                 onClick={() => handlePay(step)}
+                className="pay-btn"
+                type="button"
               >
                 Payer {step.amount} €
               </button>
-            )}
-            {step.status === 'SUCCESS' && (
-              <span className="success-tag"> Payé</span>
             )}
           </div>
         ))}

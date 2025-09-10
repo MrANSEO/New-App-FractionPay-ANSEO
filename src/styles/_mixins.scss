@@ -1,24 +1,22 @@
-// src/styles/_mixins.scss
-@use 'sass:color';
-@use './variables' as *;
+@use './variables' as *; // <== indispensable pour accéder à $radius
 
-@mixin flex($dir: row, $ai: flex-start, $jc: flex-start) {
+@mixin flex-center {
   display: flex;
-  flex-direction: $dir;
-  align-items: $ai;
-  justify-content: $jc;
+  justify-content: center;
+  align-items: center;
 }
 
-@mixin button($bg, $hover) {
+@mixin button($bg, $hover-bg) {
   background: $bg;
-  border: none;
-  padding: 8px 15px;
-  border-radius: $radius;
   color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: $radius; // ✅ maintenant il est défini
   cursor: pointer;
+  font-weight: 600;
   transition: $transition;
 
   &:hover {
-    background: $hover;
+    background: $hover-bg;
   }
 }

@@ -1,14 +1,13 @@
-// src/styles/_pages.scss
+@use "sass:color";
 @use './variables' as *;
 @use './mixins';
-@use 'sass:color';
 
 .payment-page {
   max-width: 1000px;
   margin: 40px auto;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
 }
@@ -30,12 +29,14 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
+
   label {
     width: 140px;
     font-weight: 500;
     color: #555;
   }
-  input[type="number"] {
+
+  input[type='number'] {
     flex: 1;
     max-width: 120px;
     padding: 8px;
@@ -53,11 +54,14 @@
   cursor: pointer;
   font-size: 14px;
   margin-top: 10px;
-  &:hover { background: #5a6268; }
+
+  &:hover {
+    background: #5a6268;
+  }
 }
 
 .pay-button {
-  @include mixins.button($success, color.adjust($success, $lightness: -10%));
+  @include mixins.button($success, #{color.adjust($success, $lightness: -10%)});
   width: 100%;
   padding: 15px;
   font-size: 18px;

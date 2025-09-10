@@ -1,24 +1,57 @@
-// src/styles/_components.scss
 @use './variables' as *;
-@use './mixins';
 
 .stat-card {
   background: white;
   padding: 25px;
   border-radius: $radius;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
   text-align: center;
-  h3 { color: #666; font-size: 16px; }
-  .value { font-size: 32px; color: $primary; font-weight: 700; }
-  .trend { font-size: 14px; &.positive { color: $success; } &.negative { color: $danger; } }
+
+  h3 {
+    color: #666;
+    font-size: 16px;
+  }
+
+  .value {
+    font-size: 32px;
+    color: $primary;
+    font-weight: 700;
+  }
+
+  .trend {
+    font-size: 14px;
+
+    &.positive {
+      color: $success;
+    }
+    &.negative {
+      color: $danger;
+    }
+  }
 }
 
-.payment-table, .app-table {
+.payment-table,
+.app-table {
   width: 100%;
   border-collapse: collapse;
-  th, td { padding: 12px; text-align: left; border-bottom: 1px solid $border; }
-  th { background: $light; font-weight: 600; text-transform: uppercase; font-size: 12px; }
-  tbody tr:hover { background: #f0f8ff; }
+
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid $border;
+  }
+
+  th {
+    background: $light;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  tbody tr:hover {
+    background: #f0f8ff;
+  }
 }
 
 .status-badge {
@@ -26,9 +59,23 @@
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  &.active, &.success { background: $success; color: white; }
-  &.inactive, &.failed { background: $danger; color: white; }
-  &.pending { background: $warning; color: #333; }
+
+  &.active,
+  &.success {
+    background: $success;
+    color: white;
+  }
+
+  &.inactive,
+  &.failed {
+    background: $danger;
+    color: white;
+  }
+
+  &.pending {
+    background: $warning;
+    color: #333;
+  }
 }
 
 .payment-method-card {
@@ -41,16 +88,20 @@
   transition: $transition;
   display: flex;
   align-items: center;
-  &.selected, &:hover {
+
+  &.selected,
+  &:hover {
     background: #e0f2ff;
     border-color: $primary;
     box-shadow: 0 0 0 3px rgba($primary, 0.2);
   }
-  input[type="radio"] {
+
+  input[type='radio'] {
     accent-color: $primary;
     transform: scale(1.2);
     margin-right: 15px;
   }
+
   label {
     font-size: 18px;
     font-weight: 600;
