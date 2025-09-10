@@ -1,9 +1,7 @@
-import { IsEnum } from 'class-validator';
-import { PaymentStatus } from '../schemas/payment.schema';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreatePaymentDto } from './create-payment.dto';
+import { PaymentStep } from '../schemas/payment.schema';
 
-export class UpdatePaymentDto {
-  @IsEnum(PaymentStatus, {
-    message: 'Status must be one of: PENDING, SUCCESS, FAILED',
-  })
-  status: PaymentStatus;
+export class UpdatePaymentDto extends PartialType(CreatePaymentDto) {
+  steps?: PaymentStep[];
 }

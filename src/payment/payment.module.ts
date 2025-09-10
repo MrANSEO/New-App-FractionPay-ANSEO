@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PaymentService } from './payment.service';
-import { PaymentController } from './payment.controller';
 import { Payment, PaymentSchema } from './schemas/payment.schema';
-import { PaymentRepository } from './paymentRepository';
-import { NotificationService } from '../notification/notification.service';
+import { PaymentController } from './controllers/payment.controller';
+import { PaypalController } from './controllers/paypal.controller';
+import { PaymentService } from './services/payment.service';
+import { PaypalService } from './services/paypal.service';
+import { PaymentRepository } from './ repositories/paymentRepository';
+import { NotificationService } from 'src/notification/notification.service';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Payment.name, schema: PaymentSchema }])],
-  providers: [PaymentService, PaymentRepository, NotificationService],
-  controllers: [PaymentController],
-  exports: [PaymentService, NotificationService],
+  controllers: [PaymentController, PaypalController],
+  providers: [PaymentService, PaypalService, PaymentRepository, NotificationService],
+  exports: [PaymentService, PaypalService],
 })
 export class PaymentModule {}
